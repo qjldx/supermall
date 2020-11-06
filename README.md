@@ -38,6 +38,8 @@ trim_trailing_whitespace = true
 ```
 ###common的文件夹防止公共的js文件
 
+###轮播图的代码没有做,有时间慢慢敲
+
 ## Project setup
 ```
 npm install

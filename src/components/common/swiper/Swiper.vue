@@ -177,6 +177,13 @@
         /**
          * 控制上一个,下一个
          */
+        previous(){
+          this.changeItem(-1);
+        },
+        next() {
+          this.changeItem(1)
+        },
+
         changeItem(num){
         //1 移动定时器
           this.stopTimer();
@@ -198,6 +205,14 @@
   .swiper {
     display: flex;
   }
+  .indicator {
+    display:flex;
+    justify-content: center;
+    position:absolute;
+    width:100%;
+    bottom:8px;
+  }
+
   .indi-item {
     box-sizing: border-box;
     width:8px;

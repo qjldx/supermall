@@ -122,7 +122,7 @@
             goods:{
               'pop':{page:0,list:[]},
               'new':{page:0,list:[]},
-              'pop':{page:0,list:[]},
+              'sell':{page:0,list:[]},
             }
 
           }
@@ -143,9 +143,8 @@
             })
           },
       getHomeGoods(type){
-        const page = this.goods[type].page + 1
+        const page = this.goods[type].page + 1;
         getHomeGoods(type, page).then(res => {
-          console.log(res);
           this.goods[type].list.push(...res.data.list);
           this.goods[type].page += 1;
 

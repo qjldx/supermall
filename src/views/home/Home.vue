@@ -4,7 +4,10 @@
       <home-swiper :banners="banners"></home-swiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view></feature-view>
-      <tab-control class="tab-control" :titles="['流行','新款','精选']"></tab-control>
+      <tab-control class="tab-control" :titles="['流行','新款','精选']" @tabClick="tabClick">
+
+      </tab-control>
+      <goods-list :goods="showGoods"></goods-list>
       <ul>
         <li>列表1</li>
         <li>列表2</li>
@@ -75,17 +78,7 @@
         <li>列表67</li>
         <li>列表68</li>
         <li>列表69</li>
-        <li>列表70</li>
-        <li>列表71</li>
-        <li>列表72</li>
-        <li>列表73</li>
-        <li>列表74</li>
-        <li>列表75</li>
-        <li>列表76</li>
-        <li>列表77</li>
-        <li>列表78</li>
-        <li>列表79</li>
-        <li>列表99</li>
+
         <li>列表100</li>
       </ul>
     </div>
@@ -99,13 +92,16 @@
 
   import NavBar from "components/common/navbar/NavBar";
   import TabControl from "components/content/tabControl/TabControl";
-
+  import GoodsList from "components/content/goods/GoodsList";
+  import GoodsListItem from "components/content/goods/GoodsListItem";
   import {
     getHomeMultidata,getHomeGoods
   } from "network/home";
+
   export default {
         name: "Home",
       components:{
+        GoodsList,
         TabControl,
         FeatureView,
 
@@ -123,8 +119,14 @@
               'pop':{page:0,list:[]},
               'new':{page:0,list:[]},
               'sell':{page:0,list:[]},
-            }
+            },
+            currentType:'pop',
 
+          }
+    },
+    computed:{
+          showGoods(){
+            return this.goods[this.currentType].list;
           }
     },
     created() {
@@ -136,7 +138,27 @@
        this.getHomeGoods('sell');
     },
     methods:{
-          getHomeMultidata(){
+
+           /*事件监听的方法*/
+
+          tabClick(index){
+            switch (index) {
+              case 0:
+                this.currentType='pop'
+                    break
+              case 1:
+                this.currentType='new'
+                    break
+              case 2:
+                this.currentType='sell'
+                    break
+
+            }
+          },
+      /**
+       * 网络请求的相关方法
+       */
+      getHomeMultidata(){
             getHomeMultidata().then(res=>{
               this.banners=res.data.banner.list;
               this.recommends=res.data.recommend.list;
@@ -147,8 +169,6 @@
         getHomeGoods(type, page).then(res => {
           this.goods[type].list.push(...res.data.list);
           this.goods[type].page += 1;
-
-
         });
       }
     }
@@ -173,5 +193,6 @@
   .tab-control {
     position: sticky;
     top:44px;
+    z-index:9;
   }
 </style>

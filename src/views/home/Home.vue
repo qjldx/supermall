@@ -148,6 +148,7 @@
           this.goods[type].list.push(...res.data.list);
           this.goods[type].page += 1;
 
+
         });
       }
     }

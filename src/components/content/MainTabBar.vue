@@ -1,6 +1,6 @@
 <template>
     <!--这个地方去掉了div这个标签了 加上不知道可不可以-->
-      <tab-bar>
+      <tab-bar class="tab-bar">
         <tab-bar-item path="/home" activeColor="red">
           <img slot="item-icon" src="~assets/img/tabbar/home.png">
           <!--在dom文件中加上别名是要采用~符号-->
@@ -41,5 +41,7 @@
 </script>
 
 <style scoped>
-
+  .tab-bar {
+    z-index: 9;
+  }
 </style>

@@ -14,10 +14,10 @@
 
 <style scoped>
 .slide {
-  width:100px;
+  width:100%;
   flex-shrink: 0;
 }
   .slide img {
-    width:100px;
+    width:100%;
   }
 </style>

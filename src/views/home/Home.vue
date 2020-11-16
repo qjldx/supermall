@@ -1,89 +1,21 @@
 <template>
-    <div id="home">
+    <div id="home" class="wrapper">
      <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-      <home-swiper :banners="banners"></home-swiper>
-      <recommend-view :recommends="recommends"></recommend-view>
-      <feature-view></feature-view>
-      <tab-control class="tab-control" :titles="['流行','新款','精选']" @tabClick="tabClick">
+        <scroller class="content" ref="scroll" @scroll="contentScroll">
+        <home-swiper :banners="banners"></home-swiper>
+        <recommend-view :recommends="recommends"></recommend-view>
+        <feature-view></feature-view>
+        <tab-control class="tab-control" :titles="['流行','新款','精选']"
+                     @tabClick="tabClick">
 
-      </tab-control>
-      <goods-list :goods="showGoods"></goods-list>
-      <ul>
-        <li>列表1</li>
-        <li>列表2</li>
-        <li>列表3</li>
-        <li>列表4</li>
-        <li>列表5</li>
-        <li>列表6</li>
-        <li>列表7</li>
-        <li>列表8</li>
-        <li>列表9</li>
-        <li>列表10</li>
-        <li>列表11</li>
-        <li>列表12</li>
-        <li>列表13</li>
-        <li>列表14</li>
-        <li>列表15</li>
-        <li>列表16</li>
-        <li>列表17</li>
-        <li>列表18</li>
-        <li>列表19</li>
-        <li>列表20</li>
-        <li>列表21</li>
-        <li>列表22</li>
-        <li>列表23</li>
-        <li>列表24</li>
-        <li>列表25</li>
-        <li>列表26</li>
-        <li>列表27</li>
-        <li>列表28</li>
-        <li>列表29</li>
-        <li>列表30</li>
-        <li>列表31</li>
-        <li>列表32</li>
-        <li>列表33</li>
-        <li>列表34</li>
-        <li>列表35</li>
-        <li>列表36</li>
-        <li>列表37</li>
-        <li>列表38</li>
-        <li>列表39</li>
-        <li>列表40</li>
-        <li>列表41</li>
-        <li>列表42</li>
-        <li>列表43</li>
-        <li>列表44</li>
-        <li>列表45</li>
-        <li>列表46</li>
-        <li>列表47</li>
-        <li>列表48</li>
-        <li>列表49</li>
-        <li>列表50</li>
-        <li>列表51</li>
-        <li>列表52</li>
-        <li>列表53</li>
-        <li>列表54</li>
-        <li>列表55</li>
-        <li>列表56</li>
-        <li>列表57</li>
-        <li>列表58</li>
-        <li>列表59</li>
-        <li>列表60</li>
-        <li>列表61</li>
-        <li>列表62</li>
-        <li>列表63</li>
-        <li>列表64</li>
-        <li>列表65</li>
-        <li>列表66</li>
-        <li>列表67</li>
-        <li>列表68</li>
-        <li>列表69</li>
+        </tab-control>
+        <goods-list :goods="showGoods"></goods-list>
+        </scroller>
+      <!--组件是不能点击的如果要点击的话,要加上native这个元操作-->
+      <back-top @click.native="backClick" :probe-type="3"  v-show="isShowBackTop"></back-top>
 
-        <li>列表100</li>
-      </ul>
-    </div>
+      </div>
 </template>
-
 <script>
   //import {Swiper,SwiperItem} from 'components/common/swiper';
   import HomeSwiper from "./childComps/HomeSwiper";
@@ -94,13 +26,17 @@
   import TabControl from "components/content/tabControl/TabControl";
   import GoodsList from "components/content/goods/GoodsList";
   import GoodsListItem from "components/content/goods/GoodsListItem";
+  import Scroller from "components/content/scroll/Scroller";
   import {
     getHomeMultidata,getHomeGoods
   } from "network/home";
+  import BackTop from "components/content/backTop/BackTop";
 
   export default {
         name: "Home",
       components:{
+        BackTop,
+        Scroller,
         GoodsList,
         TabControl,
         FeatureView,
@@ -121,6 +57,7 @@
               'sell':{page:0,list:[]},
             },
             currentType:'pop',
+            isShowBackTop:false
 
           }
     },
@@ -138,7 +75,9 @@
        this.getHomeGoods('sell');
     },
     methods:{
-
+      contentScroll(postion){
+        this.isShowBackTop=-postion.y>1000
+      },
            /*事件监听的方法*/
 
           tabClick(index){
@@ -170,6 +109,11 @@
           this.goods[type].list.push(...res.data.list);
           this.goods[type].page += 1;
         });
+      },
+      backClick(){
+
+        //this.$refs.scroll.scroll.scrollTo(0,0,500);
+        this.$refs.scroll.scrollTo(0,0);
       }
     }
   }
@@ -178,7 +122,9 @@
 
 <style scoped>
 #home {
-  padding-top: 44px;
+ /*padding-top: 44px;*/
+  height: 100vh;
+  position: relative;
 }
  .home-nav {
    background-color: var(--color-tint);
@@ -191,8 +137,15 @@
  }
  /*具有吸顶的效果的设置 positon sticky*/
   .tab-control {
-    position: sticky;
+  /*  position: sticky;*/
     top:44px;
     z-index:9;
   }
+.content {
+  height: calc(100% - 93px);
+  /*position: absolute; 购物街为44px,tabbar的高度为49px 两个加起来为93px,但是93是中间空出一块的原因*/
+  position: absolute;
+  margin-top: 44px;
+  overflow: hidden;
+}
 </style>

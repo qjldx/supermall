@@ -29,10 +29,12 @@
     padding-bottom: 40px;
     position: relative;
     width:48%;
+
   }
   .goods-item img{
     width:100%;
     border-radius: 5px;
+
   }
   .goods-info {
     font-size: 12px;
@@ -64,6 +66,6 @@
     top:-1px;
     width:14px;
     height: 14px;
-    background: url("~assets/img/common/collect.svg") 0 0/14px 14px;
+    background: url("../../../assets/img/common/collect.svg") 0 0/14px 14px;
   }
 </style>

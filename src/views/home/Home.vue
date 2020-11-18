@@ -1,7 +1,11 @@
 <template>
     <div id="home" class="wrapper">
      <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-        <scroller class="content" ref="scroll" @scroll="contentScroll">
+        <scroller class="content" ref="scroll"
+                  :pull-up-load="true"
+                  :probe-type="3"
+                  @scroll="contentScroll"
+                  @pullingUp="loadMore">
         <home-swiper :banners="banners"></home-swiper>
         <recommend-view :recommends="recommends"></recommend-view>
         <feature-view></feature-view>
@@ -12,7 +16,7 @@
         <goods-list :goods="showGoods"></goods-list>
         </scroller>
       <!--组件是不能点击的如果要点击的话,要加上native这个元操作-->
-      <back-top @click.native="backClick" :probe-type="3"  v-show="isShowBackTop"></back-top>
+      <back-top @click.native="backClick"   v-show="isShowBackTop"></back-top>
 
       </div>
 </template>
@@ -77,8 +81,14 @@
     methods:{
       contentScroll(postion){
         this.isShowBackTop=-postion.y>1000
+
       },
            /*事件监听的方法*/
+      loadMore(){
+        this.getHomeGoods(this.currentType)
+        this.$refs.scroll.finishPullUp()
+
+      },
 
           tabClick(index){
             switch (index) {
@@ -87,7 +97,7 @@
                     break
               case 1:
                 this.currentType='new'
-                    break
+                break
               case 2:
                 this.currentType='sell'
                     break
@@ -105,9 +115,11 @@
           },
       getHomeGoods(type){
         const page = this.goods[type].page + 1;
+        console.log(type);
         getHomeGoods(type, page).then(res => {
           this.goods[type].list.push(...res.data.list);
           this.goods[type].page += 1;
+
         });
       },
       backClick(){

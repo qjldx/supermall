@@ -9,8 +9,11 @@
         <home-swiper :banners="banners"></home-swiper>
         <recommend-view :recommends="recommends"></recommend-view>
         <feature-view></feature-view>
-        <tab-control class="tab-control" :titles="['流行','新款','精选']"
-                     @tabClick="tabClick">
+          <!--因采用了better-scroll的组件，所以此时的tab-controll这个组件就不起作用了，所以此时的
+          class="tab-control"这个类就可去了
+          -->
+        <tab-control :titles="['流行','新款','精选']"
+                     @tabClick="tabClick" ref="tabcontrol">
 
         </tab-control>
         <goods-list :goods="showGoods"></goods-list>
@@ -61,7 +64,9 @@
               'sell':{page:0,list:[]},
             },
             currentType:'pop',
-            isShowBackTop:false
+            isShowBackTop:false,
+            /*吸顶效果*/
+            tabOffsetTop:0,
 
           }
     },
@@ -77,8 +82,34 @@
        this.getHomeGoods('pop');
        this.getHomeGoods('new');
        this.getHomeGoods('sell');
+       //3 吸顶效果的tab-bar的值(离顶端的高度)
+
+    },
+    mounted() {
+       //1 图片加载完成的事件监听
+          const refresh= this.deboundce(this.$refs.scroll.refresh,500)
+      //2 获取tabControl的offsetTop 组件对象是不能获取offset的这个属性的
+      //所有的组件都 有一个属性$el:用于获取组建中的元素
+
+      console.log("tabControl的位置"+this.$refs.tabcontrol.$el.offsetTop);
+     // this.tabOffsetTop=this.$refs.tabControl
+
+      this.$bus.$on('itemImageLoad',() =>{
+        //this.$refs.scroll.refresh()
+        refresh()
+      })
     },
     methods:{
+          //抖动函数的使用
+          deboundce(func,delay){
+          let timer=null
+            return function (...args) {
+             if(timer) clearTimeout(timer)
+              timer=setTimeout(() =>{
+                 func.apply(this,args)
+              },delay)
+            }
+          },
       contentScroll(postion){
         this.isShowBackTop=-postion.y>1000
 
@@ -86,7 +117,7 @@
            /*事件监听的方法*/
       loadMore(){
         this.getHomeGoods(this.currentType)
-        this.$refs.scroll.finishPullUp()
+
 
       },
 
@@ -115,11 +146,11 @@
           },
       getHomeGoods(type){
         const page = this.goods[type].page + 1;
-        console.log(type);
+
         getHomeGoods(type, page).then(res => {
           this.goods[type].list.push(...res.data.list);
           this.goods[type].page += 1;
-
+          this.$refs.scroll.finishPullUp()
         });
       },
       backClick(){
@@ -147,12 +178,12 @@
    top:0;
    z-index: 9;
  }
- /*具有吸顶的效果的设置 positon sticky*/
+ /*具有吸顶的效果的设置 positon sticky
   .tab-control {
-  /*  position: sticky;*/
+   position: sticky;
     top:44px;
     z-index:9;
-  }
+  }*/
 .content {
   height: calc(100% - 93px);
   /*position: absolute; 购物街为44px,tabbar的高度为49px 两个加起来为93px,但是93是中间空出一块的原因*/

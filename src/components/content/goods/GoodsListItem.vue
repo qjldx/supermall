@@ -1,6 +1,7 @@
 <template>
  <div class="goods-item">
-<img :src="goodsItem.show.img" alt="">
+   <!--监听图片加载-->
+<img :src="goodsItem.show.img" alt="" @load="imageLoad">
    <div class="goods-info">
      <p>{{goodsItem.title}}</p>
      <span class="price">{{goodsItem.price}}</span>
@@ -19,6 +20,13 @@
             default(){
               return {}
             }
+          }
+      },
+      methods:{
+          imageLoad(){
+
+            /*监听图片加载,加载完成后,调用scroll.refresh方法*/
+            this.$bus.$emit('itemImageLoad');
           }
       }
     }

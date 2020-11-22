@@ -1,17 +1,16 @@
 <template>
- <div class="goods-item">
+ <div class="goods-item" @click="itemClick" >
    <!--监听图片加载-->
-<img :src="goodsItem.show.img" alt="" @load="imageLoad">
-   <div class="goods-info">
+   <img :src="goodsItem.show.img" alt="" @load="imageLoad">
+   <div class="goods-info"  >
      <p>{{goodsItem.title}}</p>
      <span class="price">{{goodsItem.price}}</span>
      <span class="collect">{{goodsItem.cfav}}</span>
    </div>
  </div>
 </template>
-
 <script>
-
+  import Detail from "views/detail/Detail";
     export default {
         name: "GoodsListItem",
       props:{
@@ -24,10 +23,15 @@
       },
       methods:{
           imageLoad(){
-
             /*监听图片加载,加载完成后,调用scroll.refresh方法*/
             this.$bus.$emit('itemImageLoad');
-          }
+          },
+        itemClick(){
+        /*  this.$router.push('/detail/'+this.goodsItem.iid)*/
+        /*  this.$router.push('/detail')*/
+          this.$router.push('/detailSelf/'+this.goodsItem.iid)
+
+        }
       }
     }
 </script>

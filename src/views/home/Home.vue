@@ -75,6 +75,9 @@
             return this.goods[this.currentType].list;
           }
     },
+    destroyed() {
+      console.log('destroyed');
+    },
     created() {
           //1 请求多个数据
       this.getHomeMultidata();

@@ -1,16 +1,10 @@
 <template>
-    <div>
 
-      <a href="/detail">显示网页</a>
-
-
-
-    </div>
 </template>
 
 <script>
     export default {
-        name: "Cart"
+        name: "DetailShopInfo"
     }
 </script>
 

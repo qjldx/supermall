@@ -7,6 +7,11 @@ export  function getDetail( iid ) {
     }
   })
 }
+export  function getRecommend() {
+ return request({
+   url:'/recommend'
+ })
+}
 //因为取出的数据很杂乱，所以在这个地方采用了ES6中的最新语法，采用类的封装来导出数据
 export class Goods{
   constructor(itemInfo,columns,services) {

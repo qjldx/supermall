@@ -67,7 +67,7 @@
     color:var(--color-high-text);
   }
   .info-price .o-price {
-    font-size: 10px;
+    font-size: 12px;
     margin-left: 5px;
     text-decoration: line-through;
   }

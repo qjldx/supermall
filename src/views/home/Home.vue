@@ -100,13 +100,14 @@
       //2 获取tabControl的offsetTop 组件对象是不能获取offset的这个属性的
       //所有的组件都 有一个属性$el:用于获取组建中的元素
 
-      console.log("tabControl的位置"+this.$refs.tabcontrol.$el.offsetTop);
+      /*console.log("tabControl的位置"+this.$refs.tabcontrol.$el.offsetTop);*/
      // this.tabOffsetTop=this.$refs.tabControl
       /*this.ItemImgListener=() =>{
         refresh()
       };
       this.$bus.$on('itemImgLoad',this.ItemImgListener)
      //采用mixin的方法抽取*/
+      this.tabClick(0);
     },
     methods:{
           //抖动函数的使用

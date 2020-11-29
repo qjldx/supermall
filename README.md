@@ -1,3 +1,4 @@
+#detailself中this.$refs.scroller.$el.offsetTop
 # supermall
 #common文件夹为公共的文件夹,content是和当前业务相关的文件
  components

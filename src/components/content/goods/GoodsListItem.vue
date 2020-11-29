@@ -30,7 +30,14 @@
       methods:{
           imageLoad(){
             /*监听图片加载,加载完成后,调用scroll.refresh方法*/
-            this.$bus.$emit('itemImageLoad');
+            this.$bus.$emit('itemImgLoad');
+            //采用的方法二 不同的页面加载
+          /*  if (this.$route.path.indexOf('/home')){
+              this.$bus.$emit('homeItemImgLoad')
+            } else if (this.$route.path.indexOf('/detail')){
+              this.$bus.$emit('detailItemImgLoad')
+            }
+            */
           },
         itemClick(){
         /*  this.$router.push('/detail/'+this.goodsItem.iid)*/

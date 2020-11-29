@@ -16,7 +16,7 @@
                      @tabClick="tabClick" ref="tabcontrol">
 
         </tab-control>
-        <goods-list :goods="showGoods"></goods-list>
+        <goods-list :goods="showGoods"/>
         </scroller>
       <!--组件是不能点击的如果要点击的话,要加上native这个元操作-->
       <back-top @click.native="backClick"   v-show="isShowBackTop"></back-top>
@@ -38,6 +38,7 @@
     getHomeMultidata,getHomeGoods
   } from "network/home";
   import BackTop from "components/content/backTop/BackTop";
+  import {itemListenerMixin} from "common/mixin";
 
   export default {
         name: "Home",
@@ -54,6 +55,7 @@
        /* Swiper,
         SwiperItem,*/
       },
+    mixins:[itemListenerMixin],
     data(){
           return {
             banners:[],
@@ -67,8 +69,12 @@
             isShowBackTop:false,
             /*吸顶效果*/
             tabOffsetTop:0,
-
+            ItemImgListener:null,
           }
+    },
+    //在这里取消了图片的加载
+    deactivated() {
+          this.$bus.$off('itemImgLoad',this.ItemImgListener)
     },
     computed:{
           showGoods(){
@@ -96,11 +102,11 @@
 
       console.log("tabControl的位置"+this.$refs.tabcontrol.$el.offsetTop);
      // this.tabOffsetTop=this.$refs.tabControl
-
-      this.$bus.$on('itemImageLoad',() =>{
-        //this.$refs.scroll.refresh()
+      /*this.ItemImgListener=() =>{
         refresh()
-      })
+      };
+      this.$bus.$on('itemImgLoad',this.ItemImgListener)
+     //采用mixin的方法抽取*/
     },
     methods:{
           //抖动函数的使用

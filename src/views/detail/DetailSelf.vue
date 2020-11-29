@@ -25,8 +25,7 @@
   import DetailParamInfo from "./childComps/DetailParamInfo";
   import DetailCommentInfo from "./childComps/DetailCommentInfo";
   import GoodsList from "components/content/goods/GoodsList";
-
-
+  import  {itemListenerMixin} from "../../common/mixin";
 
 
   export default {
@@ -41,6 +40,7 @@
       DetailBaseInfo,
       DetailSwiper,
       DetailNavBar},
+    mixins:[itemListenerMixin],
     data(){
       return {
         iid:null,
@@ -51,6 +51,7 @@
         paramInfo:{},
         commentInfo:{},
         recommends:[],
+        ItemImgListener:null,
 
       }
     },
@@ -81,6 +82,16 @@
      this.recommends=res.data.list;
    })
       },
+    mounted() {
+     /* this.ItemImgListener= () =>{
+        this.$refs.scroll.refresh()
+      }
+      this.$bus.$on('itemImgLoad',this.ItemImgListener)*/
+     //采用minx方法抽取
+    },
+    destroyed() {
+      this.$bus.$off('itemImgLoad',this.ItemImgListener)
+    },
     methods:{
       imageLoad(){
         this.$refs.scroll.refresh()

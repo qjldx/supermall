@@ -31,11 +31,11 @@
 <!--为什么此处定义的flex不能占 满全屏，只能显示一大部分-->
 <style scoped>
 .bottom-bar {
+  display: flex;
   height: 49px;
   background: #fff;
   position:relative;
   bottom: 49px;
-  display: flex;
   text-align: center;
 }
   .bar-item {

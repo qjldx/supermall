@@ -11,7 +11,7 @@
       <detail-comment-info :comment-info="commentInfo" ref="comment"/>
     <goods-list :goods="recommends" ref="recommend"/>
     </scroller>
-    <detail-bottom-bar/>
+    <detail-bottom-bar @addCart="addToCart"/>
   </div>
 </template>
 
@@ -152,6 +152,17 @@
 
         }
 
+      },
+      addToCart(){
+        //1 获取购物车展示的信息
+        const product={};
+        product.image=this.topImages[0];
+        product.title=this.goods.title;
+        product.desc=this.goods.desc;
+        product.price=this.goods.realPrice;
+        product.iid=this.iid;
+        //2 将商品添加到购物车中
+        this.$store.commit('addCart',product)
       }
     }
   }

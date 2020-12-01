@@ -23,6 +23,7 @@ export class Goods{
     this.columns=columns;
     this.services=services;
     this.realPrice=itemInfo.lowNowPrice
+
   }
 }
 export class GoodsParam {

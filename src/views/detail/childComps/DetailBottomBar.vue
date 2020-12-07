@@ -14,7 +14,7 @@
           <span class="text">收藏</span>
         </div>
       </div>
-      <div class="bar-item bar-right">
+      <div class="bar-item  bar-right">
         <div class="cart" @click="addToCart">加入购物车</div>
         <div class="buy">购买</div>
       </div>
@@ -35,21 +35,25 @@
 </script>
 <!--为什么此处定义的flex不能占 满全屏，只能显示一大部分-->
 <style scoped>
-.bottom-bar {
+ .bottom-bar {
+  position:relative;
   display: flex;
   height: 49px;
   background: #fff;
-  position:relative;
+  /* width:100%;*/
+ /* background-color: red;*/
   bottom: 49px;
   text-align: center;
 }
   .bar-item {
     flex:1;
     display: flex;
+
   }
-  .bar-item>div {
+  .bar-item > div {
     flex:1;
   }
+
   .bar-left .text {
     font-size: 13px;
   }
@@ -66,9 +70,13 @@
   .bar-left .shop {
     background-position: 0 -98px;
   }
+  .bar-left .select{
+    background-position: 0 -152px;
+  }
   .bar-right {
     font-size:15px;
     color:#fff;
+    width:100%;
     line-height: 58px;
   }
   .bar-right .cart {

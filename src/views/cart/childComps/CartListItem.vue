@@ -11,7 +11,7 @@
           <div class="item-title">{{itemInfo.title}}</div>
           <div class="item-desc">{{itemInfo.desc}}</div>
           <div class="info-bottom">
-            <div class="item-price left">{{itemInfo.price}}></div>
+            <div class="item-price left">{{itemInfo.price}}</div>
             <div class="item-count right">{{itemInfo.count}}</div>
           </div>
         </div>

@@ -1,10 +1,9 @@
 <template>
     <div class="cart">
-      <nav-bar class="nav-bar" :pull-up-load="true">
+      <nav-bar class="nav-bar">
         <div slot="center">购物车({{length}})</div>
       </nav-bar>
-      <cart-list>
-      </cart-list>
+      <cart-list/>
       <cart-bottom-bar></cart-bottom-bar>
     </div>
 </template>
